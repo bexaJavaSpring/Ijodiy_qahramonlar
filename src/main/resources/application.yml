@@ -1,0 +1,24 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ijodkorlarDB
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+
+telegram_bot_username: creative_you_bot
+telegram_bot_botToken: 5223329405:AAFgbKW5IYYaFCgjMoHkCmPJ2-ReCEtnfEM
+
