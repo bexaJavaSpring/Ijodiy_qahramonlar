@@ -1,19 +1,19 @@
 server:
-  port: 8080
+  port: 7777
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ijodkorlarDB
+    url: jdbc:postgresql://localhost:5432/IjodkorlarDB
     username: postgres
     password: 1234
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     defer-datasource-initialization: true
   sql:
     init:
-      mode: always
+      mode: never
   servlet:
     multipart:
       max-request-size: 100MB

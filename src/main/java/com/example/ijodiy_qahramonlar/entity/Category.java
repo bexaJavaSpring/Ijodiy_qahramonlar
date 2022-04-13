@@ -17,6 +17,8 @@ public class Category {
     @Column(nullable = false,unique = true)
     private String name;
     private boolean active;
+    @OneToOne
+    private Attachment attachment;
 
 
 }

@@ -16,8 +16,8 @@ public class Author {
     private Integer id;
     private String fullName;
     private Integer age;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Address address;
+    private String street;
+    private String city;
     private Integer birthDate;
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Region region;

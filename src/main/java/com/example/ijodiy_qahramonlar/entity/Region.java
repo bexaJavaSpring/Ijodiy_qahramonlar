@@ -14,10 +14,8 @@ public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Category category;
     @OneToOne
     private Attachment attachment;
 }
