@@ -55,6 +55,7 @@ public class IjodBot extends TelegramLongPollingBot {
                         currentUser.setUsername(update.getMessage().getFrom().getUserName());
                         userRepository.save(currentUser);
                     } else {
+
                         currentUser = new User();
                         currentUser.setChatId(String.valueOf(update.getMessage().getChatId()));
                         currentUser.setState(BotState.START);
@@ -67,6 +68,8 @@ public class IjodBot extends TelegramLongPollingBot {
                             e.printStackTrace();
                         }
                     }else {
+
+                        // admin panel switch case yziladi
                         try {
                             execute(botService.welcome(update));
                         } catch (TelegramApiException e) {
@@ -91,6 +94,7 @@ public class IjodBot extends TelegramLongPollingBot {
                                   case BotContains.SEND_ACTION -> {
                                       try {
                                           execute(botService.sendAction(update));
+
                                       } catch (TelegramApiException e) {
                                           e.printStackTrace();
                                       }
