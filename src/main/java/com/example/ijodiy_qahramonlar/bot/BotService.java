@@ -50,9 +50,9 @@ public class BotService implements BotServiceImpl {
         KeyboardRow row1 = new KeyboardRow();
         KeyboardRow row2 = new KeyboardRow();
         KeyboardButton button1=new KeyboardButton(BotContains.CATEGORIES);
-        KeyboardButton button2 = new KeyboardButton(BotContains.SETTINGS);
-        KeyboardButton button3 = new KeyboardButton(BotContains.ABOUT_US);
-        KeyboardButton button4 = new KeyboardButton(BotContains.Tarjima);
+        KeyboardButton button2 = new KeyboardButton(BotContains.Loyiha_mualliflari);
+        KeyboardButton button3 = new KeyboardButton(BotContains.TARJIMA);
+        KeyboardButton button4 = new KeyboardButton(BotContains.admintoMessage);
         row1.add(button1);
         row1.add(button2);
         row2.add(button3);
@@ -148,11 +148,6 @@ public class BotService implements BotServiceImpl {
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         return sendMessage;
-    }
-
-    @Override
-    public SendMessage settings(Update update) {
-        return null;
     }
 
     @Override
@@ -437,6 +432,11 @@ public class BotService implements BotServiceImpl {
         InputFile inputFile = new InputFile(new ByteArrayInputStream(attachmentContent.getAsosiyContent()), attachmentContent.getAttachment().getFileOriginalName());
         sendPhoto.setPhoto(inputFile);
         return sendPhoto;
+    }
+
+    @Override
+    public SendMessage adminToMessage(Update update) {
+        return null;
     }
 
     @Override

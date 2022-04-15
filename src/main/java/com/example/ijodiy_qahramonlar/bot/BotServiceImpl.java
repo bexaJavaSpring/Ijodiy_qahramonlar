@@ -12,8 +12,6 @@ public interface BotServiceImpl {
 
     SendMessage regions(Update update);
 
-    SendMessage settings(Update update);
-
     SendMessage aboutUs(Update update);
 
     SendMessage tarjima(Update update);
@@ -35,4 +33,6 @@ public interface BotServiceImpl {
     SendMessage sendAction(Update update);
 
     SendPhoto authors(Update update);
+
+    SendMessage adminToMessage(Update update);
 }

@@ -39,7 +39,8 @@ public class IjodBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        final String adminChatId = "958536406";
+        final String adminChatId1 = "958536406";
+        final String adminChatId2="1411561011";
         User currentUser;
         User admin;
         if (update.hasMessage()) {
@@ -59,22 +60,22 @@ public class IjodBot extends TelegramLongPollingBot {
                         currentUser.setState(BotState.START);
                         userRepository.save(currentUser);
                     }
-                    if(!message.getChatId().equals(adminChatId)) {
+                    if(message.getChatId().equals(adminChatId1) || message.getChatId().equals(adminChatId2)) {
                         try {
-                            execute(botService.welcome(update));
+                            execute(botService.adminPanel(update));
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
                         }
                     }else {
                         try {
-                            execute(botService.adminPanel(update));
+                            execute(botService.welcome(update));
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
                         }
                     }
                 } else {
                     currentUser = optionalUser.get();
-                    if(currentUser.getChatId().equals(adminChatId)){
+                    if(currentUser.getChatId().equals(adminChatId1)){
                        switch (currentUser.getState()){
                            case BotState.START -> {
                               switch (update.getMessage().getText()){
@@ -101,6 +102,13 @@ public class IjodBot extends TelegramLongPollingBot {
                                           e.printStackTrace();
                                       }
                                   }
+                                  case BotContains.admintoMessage -> {
+                                      try {
+                                          execute(botService.adminToMessage(update));
+                                      }catch (TelegramApiException e){
+                                          e.printStackTrace();
+                                      }
+                                  }
                               }
                            }
                        }
@@ -117,21 +125,14 @@ public class IjodBot extends TelegramLongPollingBot {
                                             e.printStackTrace();
                                         }
                                     }
-                                    case BotContains.SETTINGS -> {
-                                        try {
-                                            execute(botService.settings(update));
-                                        } catch (TelegramApiException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    case BotContains.ABOUT_US -> {
+                                    case BotContains.Loyiha_mualliflari -> {
                                         try {
                                             execute(botService.aboutUs(update));
                                         } catch (TelegramApiException e) {
                                             e.printStackTrace();
                                         }
                                     }
-                                    case BotContains.Tarjima -> {
+                                    case BotContains.TARJIMA -> {
                                         try {
                                             execute(botService.tarjima(update));
                                         } catch (TelegramApiException e) {
