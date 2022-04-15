@@ -27,7 +27,9 @@ public class AuthorService {
         }
         Author author=new Author();
         author.setFullName(dto.getFullName());
-        author.setAge(dto.getAge());
+        author.setRegions(dto.getRegions());
+        author.setDistrict(dto.getDistrict());
+        author.setVillage(dto.getVillage());
         Optional<Region> byId = regionRepository.findById(dto.getRegionId());
         author.setRegion(byId.get());
         Optional<Attachment> byId2 = attachmentRepository.findById(dto.getAttachmentId());
@@ -44,7 +46,9 @@ public class AuthorService {
         if(authorRepository.existsByFullNameIgnoreCase(dto.getFullName())){
             Author author = byIds.get();
             author.setFullName(dto.getFullName());
-            author.setAge(dto.getAge());
+            author.setRegions(dto.getRegions());
+            author.setDistrict(dto.getDistrict());
+            author.setVillage(dto.getVillage());
             Optional<Region> byId = regionRepository.findById(dto.getRegionId());
             author.setRegion(byId.get());
             Optional<Attachment> byId2 = attachmentRepository.findById(dto.getAttachmentId());

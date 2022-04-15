@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class AuthorDto {
     private String fullName;
-    private Integer age;
-    private Integer addressId;
+    private String district;
     private Integer regionId;
     private Integer attachmentId;
+    private String regions;
+    private String village;
+
 }

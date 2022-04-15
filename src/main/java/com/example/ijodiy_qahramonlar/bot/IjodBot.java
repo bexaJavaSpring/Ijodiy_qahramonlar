@@ -47,45 +47,64 @@ public class IjodBot extends TelegramLongPollingBot {
             Message message = update.getMessage();
             if (message.hasText()) {
                 if (message.getText().equalsIgnoreCase("/start")) {
-                    if (update.getMessage().getChatId().equals(adminChatId)) {
-//                        if (optionalUser.isPresent()) {
-//                            admin = optionalUser.get();
-//                            admin.setState(BotState.START);
-//                            admin.setFullName(update.getMessage().getFrom().getFirstName());
-//                            admin.setUsername(update.getMessage().getFrom().getUserName());
-//                            userRepository.save(admin);
-//                        } else {
-//                            admin = new User();
-//                            admin.setChatId(String.valueOf(update.getMessage().getChatId()));
-//                            admin.setState(BotState.START);
-//                            userRepository.save(admin);
-                        try {
-                            execute(botService.adminPanel(update));
-                        } catch (TelegramApiException e) {
-                            e.printStackTrace();
-                        }
+                    if (optionalUser.isPresent()) {
+                        currentUser = optionalUser.get();
+                        currentUser.setState(BotState.START);
+                        currentUser.setFullName(update.getMessage().getFrom().getFirstName());
+                        currentUser.setUsername(update.getMessage().getFrom().getUserName());
+                        userRepository.save(currentUser);
                     } else {
-                        if (optionalUser.isPresent()) {
-                            currentUser = optionalUser.get();
-                            currentUser.setState(BotState.START);
-                            currentUser.setFullName(update.getMessage().getFrom().getFirstName());
-                            currentUser.setUsername(update.getMessage().getFrom().getUserName());
-                            userRepository.save(currentUser);
-                        } else {
-                            currentUser = new User();
-                            currentUser.setChatId(String.valueOf(update.getMessage().getChatId()));
-                            currentUser.setState(BotState.START);
-                            userRepository.save(currentUser);
-                        }
+                        currentUser = new User();
+                        currentUser.setChatId(String.valueOf(update.getMessage().getChatId()));
+                        currentUser.setState(BotState.START);
+                        userRepository.save(currentUser);
+                    }
+                    if(!message.getChatId().equals(adminChatId)) {
                         try {
                             execute(botService.welcome(update));
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
                         }
+                    }else {
+                        try {
+                            execute(botService.adminPanel(update));
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
                     }
                 } else {
-                    if (!update.getMessage().getChatId().equals(adminChatId)) {
-                        currentUser = optionalUser.get();
+                    currentUser = optionalUser.get();
+                    if(currentUser.getChatId().equals(adminChatId)){
+                       switch (currentUser.getState()){
+                           case BotState.START -> {
+                              switch (update.getMessage().getText()){
+                                  case BotContains.USERS -> {
+                                      currentUser.setState(BotState.SHOW_USER);
+                                      userRepository.save(currentUser);
+                                      try {
+                                          execute(botService.showUser(update));
+                                      } catch (TelegramApiException e) {
+                                          e.printStackTrace();
+                                      }
+                                  }
+                                  case BotContains.SEND_ACTION -> {
+                                      try {
+                                          execute(botService.sendAction(update));
+                                      } catch (TelegramApiException e) {
+                                          e.printStackTrace();
+                                      }
+                                  }
+                                  case BotContains.CRUD_MENU -> {
+                                      try {
+                                          execute(botService.crudMenu(update));
+                                      }catch (TelegramApiException e){
+                                          e.printStackTrace();
+                                      }
+                                  }
+                              }
+                           }
+                       }
+                    }else {
                         switch (currentUser.getState()) {
                             case BotState.START -> {
                                 switch (update.getMessage().getText()) {
@@ -267,41 +286,13 @@ public class IjodBot extends TelegramLongPollingBot {
                                 }
                             }
                         }
-                    } else {
-                        admin = optionalUser.get();
-                        switch (admin.getState()) {
-                            case BotState.START -> {
-                                switch (update.getMessage().getText()) {
-                                    case BotContains.USERS -> {
-                                        admin.setState(BotState.SHOW_USER);
-                                        userRepository.save(admin);
-                                        try {
-                                            execute(botService.showUser(update));
-                                        } catch (TelegramApiException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    case BotContains.CRUD_MENU -> {
-                                        try {
-                                            execute(botService.crudMenu(update));
-                                        } catch (TelegramApiException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    case BotContains.SEND_ACTION -> {
-                                        try {
-                                            execute(botService.sendAction(update));
-                                        } catch (TelegramApiException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
         }
     }
 }
+
+
+
 

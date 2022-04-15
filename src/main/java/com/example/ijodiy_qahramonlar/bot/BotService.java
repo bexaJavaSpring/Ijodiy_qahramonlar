@@ -146,7 +146,6 @@ public class BotService implements BotServiceImpl {
         keyboardRowList.add(row);
 
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
-
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         return sendMessage;
     }
@@ -160,7 +159,6 @@ public class BotService implements BotServiceImpl {
     public SendMessage aboutUs(Update update) {
         return null;
     }
-
 
     @Override
     public SendPhoto selectRegion(Update update) {
@@ -310,7 +308,7 @@ public class BotService implements BotServiceImpl {
         String poemName=update.getMessage().getText();
         Optional<Poem> all = poemRepository.findByName(poemName);
         Poem poem1 = all.get();
-        sendMessage.setText("***************"+"\n\n"+poem1.getDescription()+"\n\n"+"******************"+"\n"+"t.me/creative_you_bot");
+        sendMessage.setText(poem1.getDescription()+"\n"+"t.me/creative_you_bot");
         KeyboardRow row = new KeyboardRow();
         KeyboardButton back = new KeyboardButton(BotContains.BACK);
         KeyboardButton mainMenu = new KeyboardButton(BotContains.MAIN_MENU_BUTTON);
@@ -351,14 +349,89 @@ public class BotService implements BotServiceImpl {
         Optional<AttachmentContent> optionalAttachmentContent = attachmentContentRepository.findByAttachmentId(attachment.getId());
         AttachmentContent attachmentContent = optionalAttachmentContent.get();
         StringBuilder builder = new StringBuilder();
-        builder.append(author.getFullName())
-                .append(author.getAge())
-                .append("\n")
-                .append(author.getBirthDate())
-                .append("\n")
-                .append(author.getStreet())
-                .append("\n")
-                .append(author.getCity())
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==1){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Andijon viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==2){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Buxoro viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==3){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Farg'ona viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==4){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Jizzax viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==5){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Namangan viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==6){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Navoiy viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==7){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Qashqadaryo viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==8){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Qoraqalpog'iston viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==9){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Samarqand viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==10){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Sirdaryo viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==11){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Surxondaryo viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==12){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Toshkent viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        if(author.getDistrict().equals(" ") && author.getVillage().equals(" ") && author.getRegion().getId()==13){
+            builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                    .append(author.getBirthDate()+" yilda ")
+                    .append("Xorazm viloyatida tug'ilgan.")
+                    .append("\n");
+        }
+        builder.append("\uD83D\uDCCC"+author.getFullName()+" ")
+                .append(author.getBirthDate()+" yilda ")
+                .append(author.getRegions()+" viloyati, ")
+                .append(author.getDistrict()+" tumani ")
+                .append(author.getVillage().equals(" ")?"tug'ilgan.":" qishlog'ida tug'ilgan.")
                 .append("\n");
         sendPhoto.setCaption(String.valueOf(builder));
         InputFile inputFile = new InputFile(new ByteArrayInputStream(attachmentContent.getAsosiyContent()), attachmentContent.getAttachment().getFileOriginalName());

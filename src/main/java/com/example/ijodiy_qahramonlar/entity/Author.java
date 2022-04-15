@@ -1,24 +1,28 @@
 package com.example.ijodiy_qahramonlar.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String fullName;
-    private Integer age;
-    private String street;
-    private String city;
-    private Integer birthDate;
+    @Column(nullable = false)
+    private String regions;
+    @Column(nullable = false)
+    private String district;
+    @Column(nullable = false)
+    private String village;
+    private String birthDate;
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Region region;
     @OneToOne
