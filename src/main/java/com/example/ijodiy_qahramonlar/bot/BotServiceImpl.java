@@ -1,5 +1,6 @@
 package com.example.ijodiy_qahramonlar.bot;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -28,7 +29,7 @@ public interface BotServiceImpl {
 
     SendMessage showPoem(Update update);
 
-    SendMessage showUser(Update update);
+    SendDocument showUser(Update update);
 
     SendMessage crudMenu(Update update);
 

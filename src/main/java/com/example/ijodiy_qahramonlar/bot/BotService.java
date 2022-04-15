@@ -2,10 +2,17 @@ package com.example.ijodiy_qahramonlar.bot;
 
 import com.example.ijodiy_qahramonlar.entity.*;
 import com.example.ijodiy_qahramonlar.repository.*;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -16,6 +23,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -322,9 +331,66 @@ public class BotService implements BotServiceImpl {
        return sendMessage;
     }
 
+    @SneakyThrows
     @Override
-    public SendMessage showUser(Update update) {
-       return null;
+    public SendDocument showUser(Update update) {  // hama userlarning ro'yhatini pdfda chiqarish
+
+       String path = "src/main/resources/";
+
+        File userPDF = new File(path + "users.pdf");
+
+
+
+        FileOutputStream outputStream = new FileOutputStream(userPDF);
+
+        PdfWriter pdfWriter = new PdfWriter(outputStream);
+
+        PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+        Document document = new Document(pdfDocument);
+
+        pdfDocument.addNewPage();
+        Paragraph paragraph = new Paragraph("All bot users " );
+        paragraph.setBold();
+        paragraph.setFontSize(22);
+        paragraph.setTextAlignment(TextAlignment.CENTER);
+
+        document.add(paragraph);
+
+        Table table = new Table(5);
+
+        table.addCell("T/r ");
+        table.addCell("Chat id");
+        table.addCell("Full name");
+        table.addCell("Phone number");
+        table.addCell("username");
+
+
+        Integer number = 1;
+
+        List<User> all = userRepository.findAll();
+
+        for (User user : all) {
+            table.addCell(number++ +"");
+            table.addCell(user.getChatId());
+            table.addCell(user.getFullName());
+            table.addCell(user.getPhoneNumber());
+            table.addCell(user.getUsername());
+        }
+
+        Paragraph paragraph1 = new Paragraph("All bot users count :"+ all.size());
+
+        document.add(table);
+        document.add(paragraph1);
+
+        pdfDocument.close();
+
+        SendDocument sendDocument = new SendDocument();
+        sendDocument.setDocument(new InputFile(userPDF));
+
+        return sendDocument;
+
+
+
     }
 
     @Override

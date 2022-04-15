@@ -67,6 +67,8 @@ public class IjodBot extends TelegramLongPollingBot {
                             e.printStackTrace();
                         }
                     }else {
+
+                        // admin panel switch case yziladi
                         try {
                             execute(botService.adminPanel(update));
                         } catch (TelegramApiException e) {
@@ -91,6 +93,7 @@ public class IjodBot extends TelegramLongPollingBot {
                                   case BotContains.SEND_ACTION -> {
                                       try {
                                           execute(botService.sendAction(update));
+
                                       } catch (TelegramApiException e) {
                                           e.printStackTrace();
                                       }

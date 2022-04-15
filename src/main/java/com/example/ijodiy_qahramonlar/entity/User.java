@@ -18,10 +18,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String chatId;
-    private String fullName;
-    private String phoneNumber;
-    private String username;
+    private String chatId; //
+    private String fullName; //
+    private String phoneNumber; //
+    private String username; //
     private float lon;
     private float lat;
     private String state;
