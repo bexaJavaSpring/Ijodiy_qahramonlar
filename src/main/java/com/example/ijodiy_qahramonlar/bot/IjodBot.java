@@ -54,6 +54,7 @@ public class IjodBot extends TelegramLongPollingBot {
                         currentUser.setUsername(update.getMessage().getFrom().getUserName());
                         userRepository.save(currentUser);
                     } else {
+
                         currentUser = new User();
                         currentUser.setChatId(String.valueOf(update.getMessage().getChatId()));
                         currentUser.setState(BotState.START);
