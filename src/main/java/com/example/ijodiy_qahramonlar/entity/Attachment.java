@@ -17,14 +17,13 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String fileOriginalName;//pdp.jpg
+    private String fileOriginalName;
 
-    private long size;//1024000
+    private long size;
 
-    private String contentType;//image/png
+    private String contentType;
 
-    //bu file systemga saqlaganda kk boladi
-    private String name;//papkani ichidan topish uchun
+    private String name;
 
     public Attachment(String fileOriginalName, long size, String contentType) {
         this.fileOriginalName = fileOriginalName;

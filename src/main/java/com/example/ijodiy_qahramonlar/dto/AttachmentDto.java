@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PoemDto {
-    private String name;
-    private String description;
-    private Integer authorId;
+public class AttachmentDto {
+    private String fileOriginalName;
+    private long size;
+    private String contentType;
 }

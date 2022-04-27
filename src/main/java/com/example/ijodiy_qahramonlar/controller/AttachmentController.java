@@ -1,15 +1,17 @@
 package com.example.ijodiy_qahramonlar.controller;
 
 import com.example.ijodiy_qahramonlar.dto.ApiResponse;
+import com.example.ijodiy_qahramonlar.dto.AttachmentDto;
 import com.example.ijodiy_qahramonlar.entity.Attachment;
 import com.example.ijodiy_qahramonlar.entity.AttachmentContent;
+import com.example.ijodiy_qahramonlar.entity.Category;
 import com.example.ijodiy_qahramonlar.repository.AttachmentContentRepository;
 import com.example.ijodiy_qahramonlar.repository.AttachmentRepository;
+import com.example.ijodiy_qahramonlar.repository.CategoryRepository;
 import com.example.ijodiy_qahramonlar.service.AttachmentService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,29 +21,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/attachment")
-@RestController
+@Controller
 public class AttachmentController {
     @Autowired
     AttachmentService attachmentService;
     @Autowired
     AttachmentRepository attachmentRepository;
-
+    @Autowired
+    CategoryRepository categoryRepository;
     @Autowired
     AttachmentContentRepository attachmentContentRepository;
 
-    @GetMapping("/info")
-    public List<Attachment> getAll() {
-        List<Attachment> all = attachmentRepository.findAll();
-        return all;
+    @GetMapping
+    public String getAll(Model model) {
+        model.addAttribute("message","All Attachment");
+        model.addAttribute("attachmentList", attachmentRepository.findAll());
+        return "attachment";
     }
 
     @PostMapping("/upload")
-    public String uploadFile(MultipartHttpServletRequest request) throws IOException {
-
+    public String uploadFile( MultipartHttpServletRequest request) throws IOException {
         Iterator<String> fileNames = request.getFileNames();
 
         while (fileNames.hasNext()) {
@@ -55,9 +57,9 @@ public class AttachmentController {
                 String contentType = file.getContentType();
                 Attachment attachment = new Attachment();
 
-                attachment.setFileOriginalName(originalFilename);
-                attachment.setSize(size);
-                attachment.setContentType(contentType);
+                attachment.setFileOriginalName(file.getOriginalFilename());
+                attachment.setSize(file.getSize());
+                attachment.setContentType(file.getContentType());
 
                 Attachment save = attachmentRepository.save(attachment);
 
@@ -71,7 +73,24 @@ public class AttachmentController {
                 return "Fayl saqlandi. ID si: " + save.getId();
             }
         }
-        return "xatolik";
+        return "Xatolik";
+    }
+    @PostMapping("/yuklash")
+    public String fileUpload(@RequestParam("file") MultipartFile file,  Model model) throws IOException {
+        Attachment attachment = new Attachment();
+        String fileName = file.getOriginalFilename();
+        attachment.setFileOriginalName(fileName);
+        attachment.setName(file.getName());
+        attachment.setContentType(file.getContentType());
+        attachment.setSize(file.getSize());
+        Attachment save = attachmentRepository.save(attachment);
+        AttachmentContent attachmentContent=new AttachmentContent();
+        attachmentContent.setAsosiyContent(file.getBytes());
+        attachmentContent.setAttachment(save);
+        attachmentContentRepository.save(attachmentContent);
+        model.addAttribute("success", "File Uploaded Successfully!!!");
+        return "attachment";
+
     }
 
     @PostMapping("/files")
@@ -80,7 +99,7 @@ public class AttachmentController {
     }
 
     @GetMapping("/download/{id}")
-    public void getFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+    public String getFile(@PathVariable Integer id, HttpServletResponse response,Model model) throws IOException {
         Optional<Attachment> byId = attachmentRepository.findById(id);
         if (byId.isPresent()) {
             Attachment attachment = byId.get();
@@ -92,6 +111,7 @@ public class AttachmentController {
                 FileCopyUtils.copy(attachmentContent.getAsosiyContent(), response.getOutputStream());
             }
         }
+        return "attachment";
     }
     private static final String uploadDirectory = "filelar";
     @GetMapping("dowloadSystem/{id}")
@@ -110,9 +130,9 @@ public class AttachmentController {
     }
 
     @GetMapping("/{id}")
-    public HttpEntity<?> getById(@PathVariable Integer id){
+    public String getById(@PathVariable Integer id){
         Optional<Attachment> byId = attachmentRepository.findById(id);
-        return ResponseEntity.ok().body(byId.get());
+        return "attachment";
     }
 
 }

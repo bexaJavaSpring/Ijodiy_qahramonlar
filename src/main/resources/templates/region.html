@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<h1>Region Window</h1>
+<body>
+<a class="btn-danger" href="/adminPage">Home</a>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <div class="alert alert-primary" th:text="${message}">
+                </div>
+                <tr class="table-dark">
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Operation</th>
+                </tr>
+                <tr th:each="reg:${regionList}">
+                    <td th:text="${reg.getId()}"></td>
+                    <td th:text="${reg.getName()}"></td>
+                    <td>
+                        <a th:href="'/region/edit/'+${reg.id}" class="btn btn-primary">Edit</a>
+                        <a th:href="'/region/delete/'+${reg.id}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4 text-center mt-5">
+            <form th:action="@{/region/add}" method="post">
+                <label>Enter name</label>
+                <input class="form-control" type="text" name="name" required minlength="1">
+                <div class="form-group">
+                    <label for="attachment">Select Attachment</label>
+                    <select class="form-control selectpicker" name="attachmentId" id="attachment">
+                        <option value="">attachment selected</option>
+                        <option th:each="att : ${attachmentList}"
+                                th:value="${att.id}"
+                                th:text="${att.fileOriginalName}">
+                        </option>
+                    </select>
+                </div>
+                <input type="submit" class="btn btn-primary w-100">
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

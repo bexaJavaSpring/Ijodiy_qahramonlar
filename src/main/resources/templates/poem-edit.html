@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Poem Edit</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<br>
+<br>
+<div class = "container">
+    <div class = "row">
+        <div class ="text-center left-pill mt-5">
+            <h1 class = "text-white"> Edit Poem </h1>
+            <form th:action="@{/poem/edit/{id}(id=${poem.id})}" th:object = "${poem}" method="POST">
+                <div class ="form-group">
+                    <label> poem New Name </label>
+                    <br><br>
+                    <input
+                            type = "text"
+                            name = "name"
+                            th:field = "*{name}"
+                            class = "form-control"
+                            placeholder="Enter name"
+                    />
+                </div>
+                <br>
+                <div class ="form-group">
+                    <label> poem New description </label>
+                    <br><br>
+                    <input
+                            type = "text"
+                            name = "description"
+                            th:field = "*{description}"
+                            class = "form-control"
+                            placeholder="Enter description"
+                    />
+                </div>
+               <br>
+                <div class="form-group">
+                    <label for="author">Select Author</label>
+                    <select class="form-control selectpicker" name="authorId" id="author">
+                        <option value="">author selected</option>
+                        <option th:each="author : ${authorList}"
+                                th:value="${author.id}"
+                                th:text="${author.fullName}"
+                                th:selected="${poem.author.id}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class = "box-footer">
+                    <button type="submit" class = "btn btn-primary w-100">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

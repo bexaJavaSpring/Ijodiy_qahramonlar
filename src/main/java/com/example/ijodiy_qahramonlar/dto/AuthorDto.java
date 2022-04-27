@@ -14,5 +14,5 @@ public class AuthorDto {
     private Integer attachmentId;
     private String regions;
     private String village;
-
+    private String birthdate;
 }

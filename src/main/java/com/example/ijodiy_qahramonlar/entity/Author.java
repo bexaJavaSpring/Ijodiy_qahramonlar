@@ -14,13 +14,9 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
     private String fullName;
-    @Column(nullable = false)
     private String regions;
-    @Column(nullable = false)
     private String district;
-    @Column(nullable = false)
     private String village;
     private String birthDate;
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

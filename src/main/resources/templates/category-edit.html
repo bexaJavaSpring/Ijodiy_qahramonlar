@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Category Edit</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<br>
+<br>
+<div class = "container">
+    <div class = "row">
+        <div class ="text-center left-pill mt-5">
+            <h1 class = "text-white"> Edit Category </h1>
+            <form th:action="@{/category/edit/{id}(id=${category.id})}" th:object = "${category}" method="POST">
+                <div class ="form-group">
+                    <label> category New Name </label>
+                    <br><br>
+                    <input
+                            type = "text"
+                            name = "name"
+                            th:field = "*{name}"
+                            class = "form-control"
+                            placeholder="Enter name"
+                    />
+                </div>
+                <br>
+                <div class="col-sm-5">
+                    <label>Active:</label>
+                    <input class="form-check-input m-2 h5" th:field="*{active}" type="checkbox">
+                </div>
+                <div class="form-group">
+                    <label for="attachment">Select Attachment</label>
+                    <select class="form-control selectpicker" name="attachmentId" id="attachment">
+                        <option value="">attachment selected</option>
+                        <option th:each="attachment : ${attachmentList}"
+                                th:value="${attachment.id}"
+                                th:text="${attachment.fileOriginalName}"
+                                th:selected="${category.attachment.id}">
+                        </option>
+                    </select>
+                </div>
+                <br>
+                <div class = "box-footer">
+                    <button type="submit" class = "btn btn-primary w-100">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

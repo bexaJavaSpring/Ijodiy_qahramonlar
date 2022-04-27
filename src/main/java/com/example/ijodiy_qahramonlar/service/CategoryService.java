@@ -2,7 +2,9 @@ package com.example.ijodiy_qahramonlar.service;
 
 import com.example.ijodiy_qahramonlar.dto.ApiResponse;
 import com.example.ijodiy_qahramonlar.dto.CategoryDto;
+import com.example.ijodiy_qahramonlar.entity.Attachment;
 import com.example.ijodiy_qahramonlar.entity.Category;
+import com.example.ijodiy_qahramonlar.repository.AttachmentRepository;
 import com.example.ijodiy_qahramonlar.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import java.util.Optional;
 public class CategoryService {
 
     final CategoryRepository categoryRepository;
-
+     final AttachmentRepository attachmentRepository;
     public ApiResponse add(CategoryDto dto) {
         if(categoryRepository.existsByNameIgnoreCase(dto.getName())){
             return new ApiResponse("category already exist!",false);
@@ -22,6 +24,8 @@ public class CategoryService {
         Category category=new Category();
         category.setName(dto.getName());
         category.setActive(dto.isActive());
+        Optional<Attachment> byId = attachmentRepository.findById(dto.getAttachmentId());
+        category.setAttachment(byId.get());
         categoryRepository.save(category);
         return new ApiResponse("Added",true);
     }
@@ -35,6 +39,8 @@ public class CategoryService {
             Category category = byId.get();
             category.setName(dto.getName());
             category.setActive(dto.isActive());
+            Optional<Attachment> byId1 = attachmentRepository.findById(dto.getAttachmentId());
+            category.setAttachment(byId1.get());
             categoryRepository.save(category);
             return new ApiResponse("Edited",true);
         }

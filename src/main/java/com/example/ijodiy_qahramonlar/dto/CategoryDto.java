@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class CategoryDto {
     private String name;
     private boolean active;
+    private Integer attachmentId;
 }

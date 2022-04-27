@@ -25,8 +25,7 @@ public class PoemService {
         Poem poem=new Poem();
         poem.setName(dto.getName());
         poem.setDescription(dto.getDescription());
-        Optional<Attachment> byId = attachmentRepository.findById(dto.getAttachmentId());
-        poem.setAttachment(byId.get());
+
         Optional<Author> byId1 = authorRepository.findById(dto.getAuthorId());
         poem.setAuthor(byId1.get());
         Poem save = poemRepository.save(poem);
@@ -42,8 +41,6 @@ public class PoemService {
             Poem poem = byIds.get();
             poem.setName(dto.getName());
             poem.setDescription(dto.getDescription());
-            Optional<Attachment> byId = attachmentRepository.findById(dto.getAttachmentId());
-            poem.setAttachment(byId.get());
             Optional<Author> byId1 = authorRepository.findById(dto.getAuthorId());
             poem.setAuthor(byId1.get());
             Poem save = poemRepository.save(poem);

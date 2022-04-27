@@ -8,9 +8,14 @@ import java.util.Optional;
 
 public interface AuthorRepository extends JpaRepository<Author,Integer> {
 
-    boolean existsByFullNameIgnoreCase(String fullname);
+   boolean existsByFullNameIgnoreCase(String fullName);
 
     Optional<Author> findByFullName(String fullName);
 
     List<Author> findByRegion_Name(String name);
+
+
+
+
+
 }

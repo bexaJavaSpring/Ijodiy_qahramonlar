@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class RegionDto {
-  private String name;
-  private Integer categoryId;
-  private Integer attachmentId;
+    private String name;
+    private Integer attachmentId;
 }

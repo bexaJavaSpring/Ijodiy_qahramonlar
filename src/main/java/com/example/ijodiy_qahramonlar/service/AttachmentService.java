@@ -19,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AttachmentService {
     AttachmentRepository attachmentRepository;
-    AttachmentContentRepository attachmentContentRepository;
 
     @SneakyThrows
     public ApiResponse uploadFile(MultipartHttpServletRequest request) {

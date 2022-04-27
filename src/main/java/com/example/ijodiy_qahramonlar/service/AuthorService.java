@@ -30,6 +30,7 @@ public class AuthorService {
         author.setRegions(dto.getRegions());
         author.setDistrict(dto.getDistrict());
         author.setVillage(dto.getVillage());
+        author.setBirthDate(dto.getBirthdate());
         Optional<Region> byId = regionRepository.findById(dto.getRegionId());
         author.setRegion(byId.get());
         Optional<Attachment> byId2 = attachmentRepository.findById(dto.getAttachmentId());

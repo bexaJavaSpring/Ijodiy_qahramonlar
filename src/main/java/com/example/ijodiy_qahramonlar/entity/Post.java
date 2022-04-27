@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,12 +17,11 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    @Column(length = 10000)
     private String description;
     @OneToOne
     private Attachment attachment;
-    @ManyToOne
-    private User user;
-    @CreationTimestamp //avtomatik yozadi
-    private Timestamp createdDate;
+
+    private Date createdDate;
     private boolean active;
 }

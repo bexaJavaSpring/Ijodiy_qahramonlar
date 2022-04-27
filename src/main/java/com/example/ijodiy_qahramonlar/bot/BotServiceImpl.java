@@ -1,9 +1,13 @@
 package com.example.ijodiy_qahramonlar.bot;
 
+import com.example.ijodiy_qahramonlar.entity.Post;
+import com.example.ijodiy_qahramonlar.entity.User;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 public interface BotServiceImpl {
 
@@ -27,13 +31,15 @@ public interface BotServiceImpl {
 
     SendMessage showPoem(Update update);
 
-    SendDocument showUser(Update update);
+    SendDocument UserList(Update update);
 
     SendMessage crudMenu(Update update);
 
-    SendMessage sendAction(Update update);
+    SendPhoto sendNotification(Long chatId,Post post);
 
     SendPhoto authors(Update update);
 
     SendMessage adminToMessage(Update update);
+
+
 }
